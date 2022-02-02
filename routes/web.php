@@ -1,18 +1,8 @@
 <?php
 
 use App\Http\Controllers\PizzaController;
+use App\Http\Controllers\UserOrderController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,7 +18,11 @@ Route::group(['middleware' => 'auth','admin'], function() {
     Route::post('/pizza/store', [PizzaController::class, 'store'])->name('pizza.store');
     Route::get('/pizza/{id}/edit', [PizzaController::class, 'edit'])->name('pizza.edit');
     Route::put('/pizza/{id}/update', [PizzaController::class, 'update'])->name('pizza.update');
-    Route::delete('/pizza/{id}/destroy', [PizzaController::class, 'destroy'])->name('pizza.destroy');    
+    Route::delete('/pizza/{id}/destroy', [PizzaController::class, 'destroy'])->name('pizza.destroy');
+
+    // User Orders
+    Route::get('user/order', [UserOrderController::class, 'index'])->name('user.order');
+    Route::post('order/{id}/status', [UserOrderController::class, 'changeStatus'])->name('order.status');
 });
 
 
